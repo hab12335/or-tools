@@ -12,6 +12,11 @@ jobs:
           windows-2022,
           #windows-2019,
         ]
+        build: [
+          ["Visual Studio 17 2022", "v143,version=14.37"],
+          ["Visual Studio 17 2022", "v143,version=14.36"],
+          ["Visual Studio 17 2022", "v143,version=14.35"],
+        ]
       fail-fast: false # Don't cancel all jobs if one fails.
     runs-on: ${{ matrix.runner }}
     #runs-on: windows-latest
@@ -22,7 +27,11 @@ jobs:
         cmake --version
         cmake -G || true
     - name: Configure
-      run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DBUILD_DEPS=ON
+      run: >
+        cmake -S. -Bbuild
+        -G "${{ matrix.build[0] }}" -T ${{ matrix.build[1] }}
+        -DCMAKE_BUILD_TYPE=Release
+        -DBUILD_DEPS=ON
     - name: Build
       run: cmake --build build --config Release --target ALL_BUILD -v -- /verbosity:d
     - name: Test
