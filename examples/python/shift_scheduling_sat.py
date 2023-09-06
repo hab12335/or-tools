@@ -202,7 +202,7 @@ def solve_shift_scheduling(params, output_proto):
         (3, 1, 0),
         (4, 2, 0),
         (5, 2, 0),
-        (6, 2, 3),
+        (6, 2, 0),
         (7, 3, 0),
         (0, 1, 1),
         (1, 1, 1),
